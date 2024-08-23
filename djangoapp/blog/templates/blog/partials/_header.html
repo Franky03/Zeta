@@ -3,11 +3,11 @@
         <div class="logo">
             <h1>{{ site_setup.title }}</h1>
         </div>
-        <div class="search-bar">
+        <form action="{% url 'blog:search' %}" method="get" class="search-bar">
             <i class="fa fa-search" id="search-icon"></i>
-            <input type="text" placeholder="Pesquisar...">
-            
-        </div>
+            <input type="text" placeholder="Pesquisar..." name="search">
+            <button type="submit" style="display:none;"></button>
+        </form>
         <div class="user-profile">
             <div class="profile-pic-container">
                 <img src="perfil.jpg" alt="Foto do perfil" class="profile-pic">

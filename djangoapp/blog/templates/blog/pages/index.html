@@ -2,6 +2,22 @@
 
 {% block content %}
     <div class="post-container">
+        <!-- Formulário para criar um novo post -->
+        <div class="create-post">
+            <div class="input-area">
+                <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
+                <textarea placeholder="What's on your mind?"></textarea>
+            </div>
+
+            <div class="footer">
+                <div class="icons-container">
+                    <i class="fa fa-image"></i>
+                    <i class="fa fa-smile"></i>
+                </div>
+                <button type="submit">Postar</button>
+            </div>
+        </div>
+
         {% for post in posts %}
             {% if post.is_repost %}
             <div class="repost-info">

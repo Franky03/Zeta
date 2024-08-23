@@ -3,6 +3,7 @@
     --clr-white: 0 0% 98%;
     --clr-secondary: 240 3.7% 15.9%;
     --clr-mutted-foreground: 240 5% 64.9%;
+    --post-size: 500px;
 
 }
 
@@ -123,12 +124,82 @@ header {
     padding: 20px;
     margin-top: 80px; /* Ajusta o espaço entre o header e o post */
 }
+.create-post {
+    display: flex;
+    flex-direction: column;
+    background-color: #1c1c1e; /* Fundo escuro */
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: var(--post-size);
+    color: #d1d1d1; /* Texto em cinza claro */
+}
 
+.create-post .input-area {
+    display: flex;
+    align-items: center; /* Alinha a imagem e o placeholder horizontalmente */
+    margin-bottom: 10px;
+}
+
+.create-post img.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px; /* Espaçamento entre a imagem e o campo de texto */
+}
+
+.create-post textarea {
+    flex: 1;
+    background-color: transparent; /* Fundo transparente */
+    border: none;
+    outline: none;
+    color: #d1d1d1; /* Cor do texto */
+    font-size: 18px;
+    resize: none;
+    margin-left: 0; /* Remove o espaçamento à esquerda do campo de texto */
+    margin-right: 0; /* Remove o espaçamento à direita do campo de texto */
+    margin-top: 15px;
+
+}
+
+.create-post .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.create-post .icons-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.create-post .icons-container i {
+    font-size: 20px;
+    color: #1d9bf0; /* Cor dos ícones */
+    cursor: pointer;
+}
+
+.create-post button[type="submit"] {
+    background-color: #1d9bf0; /* Cor de fundo do botão */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.create-post button[type="submit"]:hover {
+    background-color: #1a8cd8; /* Cor de fundo ao passar o mouse */
+}
 .post-card {
     border: 1px solid hsl(var(--clr-secondary));
     border-radius: 5px;
     width: 100%;
-    max-width: 500px; /* Define o tamanho fixo do post */
+    max-width: var(--post-size); /* Define o tamanho fixo do post */
     margin-bottom: 20px;
     padding: 15px;
 }
