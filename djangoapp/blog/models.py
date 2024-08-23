@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from utils.rands import slugify_new
 from django_summernote.models import AbstractAttachment
 from utils.images import resize_image
+from django.urls import reverse
 
 # Create your models here.
 
@@ -62,11 +63,14 @@ class Category(models.Model):
     def __str__(self) -> str:
         return self.name
     
+class PostManager(models.Manager):
+    def get_posts(self):
+        return self.order_by('-created_at')
     
 class Post(models.Model):
     # quando eu for acessar pelo usuário meus posts, eu quero que ele me retorne todos os posts que eu criei, logo o related_name='posts' é para isso
     # vou buscar de dentro do usuário os post que ele criou, relação inversa
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts', blank=True, null=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -77,12 +81,31 @@ class Post(models.Model):
     class Meta:
         ordering = ['-created_at']
 
+    objects = PostManager()
+
+    def get_absolute_url(self):
+        return reverse('blog:post', args=[self.id,])
+    
+
     def __str__(self):
         return f'{self.author.username}: {self.content[:30]}'
     
     def save(self, *args, **kwargs):
+        if not self.author:
+            # se o autor não for informado, o autor será o usuário logado
+            self.author = User.objects.first()
+
         if self.is_repost:
             self.respost_count = self.original_post.reposts.count() + 1
+
+        # se o post for um repost, o conteúdo do post será o conteúdo do post original
+        # mas se o post tiver um conteúdo diferente, o conteúdo do post será o conteúdo do post + o conteúdo do post original
+
+        if self.is_repost:
+            if self.content != self.original_post.content:
+                self.content = f'{self.content}\n\n{self.original_post.content}'
+            else:
+                self.content = self.original_post.content
 
         return super().save(*args, **kwargs)
     
@@ -104,9 +127,14 @@ class Like(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.author:
+            self.author = User.objects.first()
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.author.username}: {self.content[:30]}'

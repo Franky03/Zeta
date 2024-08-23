@@ -113,6 +113,7 @@ header {
     height: 100%;
     object-fit: cover;
 }
+
 .post-container {
     display: flex;
     flex-direction: column;
@@ -130,6 +131,11 @@ header {
     max-width: 500px; /* Define o tamanho fixo do post */
     margin-bottom: 20px;
     padding: 15px;
+}
+
+.post-link {
+    text-decoration: none; /* Remove o sublinhado padrão dos links */
+    color: inherit; /* Garante que o texto dentro do link herde a cor do pai */
 }
 
 .post-header {
@@ -150,7 +156,28 @@ header {
 
 .post-content {
     margin-bottom: 10px;
+    cursor: pointer; /* Cursor de clique para o conteúdo do post */
 }
+
+.post-content-page{
+    margin-bottom: 10px;
+}
+
+.repost-info {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    color: hsl(0, 0%, 40%);
+    position: relative;
+    right: 170px;
+}
+
+.repost-info i {
+    font-size: 18px; /* Tamanho do ícone */
+    color: rgb(124, 0, 254); /* Cor do ícone */
+    margin-right: 8px; /* Espaçamento entre o ícone e o texto */
+}
+
 
 .post-image {
     display: flex;
@@ -250,4 +277,26 @@ header {
 
 .dropdown.clicked .dropdown-menu {
     display: block;
+}
+
+.comment-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    width: 500px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid hsl(0, 0%, 90%);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+.comment-date {
+    color: hsl(0, 0%, 50%);
 }

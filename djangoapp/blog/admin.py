@@ -1,8 +1,12 @@
 from django.contrib import admin
 from blog.models import Tag, Category, Post, Comment, Like
 from django_summernote.admin import SummernoteModelAdmin
+from django.urls import reverse
 
-# Register your models here.
+class CommentInline(admin.TabularInline):
+    model = Comment
+    extra = 1 
+    
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     list_display = 'id', 'name', 'slug',
@@ -27,16 +31,14 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(SummernoteModelAdmin):
+    inlines = [CommentInline]
     summernote_fields = ('content',)
     list_display = ('id', 'author', 'content', 'created_at', 'updated_at', 'is_repost', 'original_post')
     search_fields = ('content', 'author__username')
     list_display_links = ('content',)
     list_filter = ('created_at', 'is_repost')
-    readonly_fields = ('created_at', 'updated_at', 'respost_count', 'original_post', 'is_repost')
+    readonly_fields = ('created_at', 'updated_at', 'respost_count')
     ordering = ('-created_at',)
-    # definir o autor do post como o usuário logado
-    
-    
 
 
 @admin.register(Comment)
