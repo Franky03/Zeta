@@ -71,7 +71,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_repost = models.BooleanField(default=False)
-    original_post = models.ForeignKey('self', on_delete=models.CASCADE, related_name='reposts', null=True, blank=True)
+    original_post = models.ForeignKey('self', on_delete=models.CASCADE, related_name='reposts', null=True, blank=True) # isso é uma relação recursiva
     respost_count = models.IntegerField(default=0)
  
     class Meta:
@@ -85,7 +85,7 @@ class Post(models.Model):
             self.respost_count = self.original_post.reposts.count() + 1
 
         return super().save(*args, **kwargs)
-
+    
     def like_count(self):
         return self.likes.count() if self.likes else 0
     
