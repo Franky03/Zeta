@@ -212,11 +212,6 @@ header {
     color: inherit; /* Garante que o texto dentro do link herde a cor do pai */
 }
 
-.post-link-like {
-    text-decoration: none; /* Remove o sublinhado padrão dos links */
-    color: inherit; /* Garante que o texto dentro do link herde a cor do pai */
-}
-
 .post-header {
     display: flex;
     justify-content: space-between;
@@ -439,6 +434,3 @@ header {
     transition: width 5s linear;
 }
 
-.liked {
-    color: var(--clr_purple);
-}

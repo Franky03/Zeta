@@ -1,62 +1,23 @@
 {% extends "blog/base.html" %}
 
 {% block content %}
-    <div class="post-container">  
+    <div class="post-container" id="post-open-cont">  
         {% include "blog/partials/messages.html" %}
         <!-- Post Details -->
-        <div class="post-card">
-            <div class="post-header">
-                <div class="post-author">{{ post.author.username }}</div>
-                <div class="post-date">{{ post.created_at|date:"d M Y, H:i" }}</div>
-                {% if post.author == user %}
-                    <div class="dropdown">
-                        <button class="dropdown-toggle">⋮</button>
-                        <div class="dropdown-menu">
-                            <a href="#" class="edit-link">Edit</a>
-                            <a href="#" class="delete-link" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-
-            <div class="post-content-page">
-                {{ post.content|safe }}
-                {% if post.image %}
-                    <div class="post-image">
-                        <a href="{{ post.image.url }}" target="_blank">
-                            <img src="{{ post.image.url }}" alt="Image related to the post">
-                        </a>
-                    </div>
-                {% endif %}
-            </div>
-
-            <div class="post-footer">
-                <div class="footer-icon">
-                    <span class="post-likes">
-                        <i class="fa fa-thumbs-up"></i> {{ post.like_count }}
-                    </span>
-                </div>
-                <div class="footer-icon">
-                    <span class="post-comments">
-                        <i class="fa fa-comment"></i> {{ post.comments.count }}
-                    </span>
-                </div>
-                <div class="footer-icon">
-                    <span class="post-reposts">
-                        <i class="fa fa-retweet"></i> {{ post.reposts_count }}
-                    </span>
-                </div>
-            </div>
-        </div>
+        
+        {% include "blog/partials/_post_card.html" %}
 
         <!-- Comment Create Section --> 
 
         <div class="create-post" >
-            <form action="{% url 'blog:comment' %}" method="POST" enctype="multipart/form-data">
+            <form hx-post="{% url 'blog:comment' %}" 
+                hx-target="#post-open-cont" 
+                hx-swap="outerHTML"
+                enctype="multipart/form-data">
                 {% csrf_token %}
                 <input type="hidden" name="pid" value="{{ post.id }}">
                 <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
-                    <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic" >
+                    <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
                     <textarea class="txt-post" name="content" placeholder="Comment here"></textarea>
                 </div>
                 
