@@ -2,6 +2,7 @@
 
 {% block content %}
     <div class="post-container">  
+        {% include "blog/partials/messages.html" %}
         <!-- Post Details -->
         <div class="post-card">
             <div class="post-header">
@@ -46,6 +47,25 @@
                     </span>
                 </div>
             </div>
+        </div>
+
+        <!-- Comment Create Section --> 
+
+        <div class="create-post" >
+            <form action="{% url 'blog:comment' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="pid" value="{{ post.id }}">
+                <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic" >
+                    <textarea class="txt-post" name="content" placeholder="Comment here"></textarea>
+                </div>
+                
+                <div class="footer" style="margin-top: 10px;">
+                    <div class="icons-container" style="display: flex; justify-content: space-between;">
+                    </div>
+                    <button type="submit" style="margin-top: 10px;">Comment</button>
+                </div>
+            </form>
         </div>
 
         <!-- Comments Section -->

@@ -1,0 +1,54 @@
+
+<div id="commentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCommentModal()">&times;</span>
+        <div id="modalPostContent">
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-author">{{ post.author.username }}</div>
+                    <div class="post-date">{{ post.created_at|date:"d M Y, H:i" }}</div>
+                    {% if post.author == user %}
+                        <div class="dropdown">
+                            <button class="dropdown-toggle">⋮</button>
+                            <div class="dropdown-menu">
+                                <a href="#" class="edit-link">Edit</a>
+                                <a href="#" class="delete-link" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+    
+                <div class="post-content-page">
+                    {{ post.content|safe }}
+                    {% if post.image %}
+                        <div class="post-image">
+                            <a href="{{ post.image.url }}" target="_blank">
+                                <img src="{{ post.image.url }}" alt="Image related to the post">
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+    
+                <div class="post-footer">
+                    <div class="footer-icon">
+                        <span class="post-likes">
+                            <i class="fa fa-thumbs-up"></i> {{ post.like_count }}
+                        </span>
+                    </div>
+                    <div class="footer-icon">
+                        <span class="post-comments">
+                            <i class="fa fa-comment"></i> {{ post.comments.count }}
+                        </span>
+                    </div>
+                    <div class="footer-icon">
+                        <span class="post-reposts">
+                            <i class="fa fa-retweet"></i> {{ post.reposts_count }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+

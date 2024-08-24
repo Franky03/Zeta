@@ -4,7 +4,7 @@
     --clr-secondary: 240 3.7% 15.9%;
     --clr-mutted-foreground: 240 5% 64.9%;
     --post-size: 500px;
-
+    --clr_purple: rgb(124, 0, 254);
 }
 
 html {
@@ -89,11 +89,11 @@ header {
 }
 
 .search-bar:focus-within i {
-    color: rgb(124, 0, 254); /* Azul */
+    color: var(--clr_purple); /* Azul */
 }
 
 .search-bar input:focus {
-    border: 1px solid rgb(124, 0, 254);
+    border: 1px solid var(--clr_purple);
 }
 
 .user-profile {
@@ -167,7 +167,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
+
 }
 
 .create-post .icons-container {
@@ -178,23 +178,26 @@ header {
 
 .create-post .icons-container i {
     font-size: 20px;
-    color: #1d9bf0; /* Cor dos ícones */
+    color: var(--clr_purple); /* Cor dos ícones */
     cursor: pointer;
 }
 
 .create-post button[type="submit"] {
-    background-color: #1d9bf0; /* Cor de fundo do botão */
+    background-color: var(--clr_purple); /* Cor de fundo do botão */
     color: #fff;
-    padding: 10px 20px;
+    padding: 10px 10px;
     border: none;
-    border-radius: 20px;
+    border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
 }
 
 .create-post button[type="submit"]:hover {
-    background-color: #1a8cd8; /* Cor de fundo ao passar o mouse */
+    background-color: var(--clr_purple); /* Cor de fundo ao passar o mouse */
 }
+
+
+
 .post-card {
     border: 1px solid hsl(var(--clr-secondary));
     border-radius: 5px;
@@ -205,6 +208,11 @@ header {
 }
 
 .post-link {
+    text-decoration: none; /* Remove o sublinhado padrão dos links */
+    color: inherit; /* Garante que o texto dentro do link herde a cor do pai */
+}
+
+.post-link-like {
     text-decoration: none; /* Remove o sublinhado padrão dos links */
     color: inherit; /* Garante que o texto dentro do link herde a cor do pai */
 }
@@ -245,7 +253,7 @@ header {
 
 .repost-info i {
     font-size: 18px; /* Tamanho do ícone */
-    color: rgb(124, 0, 254); /* Cor do ícone */
+    color: var(--clr_purple); /* Cor do ícone */
     margin-right: 8px; /* Espaçamento entre o ícone e o texto */
 }
 
@@ -285,7 +293,7 @@ header {
 }
 
 .footer-icon:hover {
-    color: rgb(124, 0, 254); /* Azul no hover */
+    color: var(--clr_purple); /* Azul no hover */
 }
 
 .post-edit a {
@@ -370,4 +378,67 @@ header {
 
 .comment-date {
     color: hsl(0, 0%, 50%);
+}
+.messages-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* Estilo da notificação */
+.notification {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    position: relative;
+    width: 300px;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Ícone de sucesso */
+.notification .icon {
+    font-size: 18px;
+    margin-right: 10px;
+    color: #4caf50; /* Cor verde */
+}
+
+/* Mensagem de texto */
+.notification .message {
+    flex: 1;
+    font-size: 14px;
+}
+
+/* Botão de fechar */
+.notification .close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    padding-left: 10px;
+}
+
+.notification .close:hover {
+    color: #999;
+}
+
+/* Barra de progresso */
+.notification .progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background-color: #4caf50;
+    width: 100%;
+    transition: width 5s linear;
+}
+
+.liked {
+    color: var(--clr_purple);
 }

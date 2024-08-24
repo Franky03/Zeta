@@ -1,12 +1,13 @@
 from typing import Any
-from blog.models import Post
+from blog.models import Post, Comment, Like
 from django.db.models import Q
-
+from django.contrib.auth.models import User
 from django.views.generic import ListView,DetailView
 
-from django.db.models.query import QuerySet
-from django.http import Http404, HttpRequest, HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def handler404(request, template_name="blog/pages/404.html"):
     response = render(template_name)
@@ -19,6 +20,50 @@ def index(request):
     # SELECT * FROM posts ORDER BY created_at DESC 
 
     return render(request, 'blog/pages/index.html', {'posts': posts, 'page_title': "Home / "})
+
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        content = request.POST.get('content', '')
+        if content.strip():
+            post = Post.objects.create(author=request.user, content=content)
+            
+            messages.success(request, 'Post publicado!')
+            return redirect('blog:index')
+        else:
+            messages.error(request, 'O conteúdo do post não pode estar vazio.')
+            return redirect('blog:index')
+
+@login_required
+def create_comment(request):
+    if request.method == 'POST':
+        content = request.POST.get('content', '')
+        post_id = request.POST.get('pid', '')
+        post_id = int(post_id)
+        if content.strip():
+            post = Post.objects.filter(id=post_id).first()
+            commment = Comment.objects.create(author=request.user, post=post,content=content)
+            
+            messages.success(request, 'Comentário publicado!')
+            return redirect('blog:post', id=post_id)
+        else:
+            messages.error(request, 'O conteúdo do comentário não pode estar vazio.')
+            return redirect('blog:post', id=post_id)
+        
+@login_required
+def toggle_like(request, post_id):
+    post = Post.objects.filter(id=post_id).first() # SELECT * FROM post WHERE id = post_id;
+    user = request.user
+
+    user = User.objects.filter(username=user).first()
+    existing_like = Like.objects.filter(user=user, post=post).first() # SELECT * FROM like WHERE user_id = user_id AND post_id = post_id LIMIT 1;
+
+    if existing_like:
+        existing_like.delete() # DELETE FROM like WHERE user_id = user_id AND post_id = post_id;
+    else:
+        Like.objects.create(user=user, post=post) # INSERT INTO like (user_id, post_id) VALUES (user_id, post_id);
+
+    return HttpResponse(str(post.likes.count()))
 
 class PostsListView(ListView):
     model = Post

@@ -1,0 +1,12 @@
+{% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+            <div class="notification {{ message.tags }}">
+                <span class="icon">✔</span>
+                <span class="message">{{ message }}</span>
+                <button class="close" onclick="this.parentElement.style.display='none';">&times;</button>
+                <div class="progress-bar"></div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

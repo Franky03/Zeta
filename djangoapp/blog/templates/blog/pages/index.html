@@ -3,20 +3,25 @@
 {% block content %}
     <div class="post-container">
         <!-- Formulário para criar um novo post -->
-        <div class="create-post">
-            <div class="input-area">
-                <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
-                <textarea placeholder="What's on your mind?"></textarea>
-            </div>
-
-            <div class="footer">
-                <div class="icons-container">
-                    <i class="fa fa-image"></i>
-                    <i class="fa fa-smile"></i>
+         
+        <div class="create-post" >
+            <form action="{% url 'blog:create_post' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic" >
+                    <textarea class="txt-post" name="content" placeholder="What's on your mind?"></textarea>
                 </div>
-                <button type="submit">Postar</button>
-            </div>
+                
+                <div class="footer" >
+                    <div class="icons-container" style="display: flex; justify-content: space-between;">
+                    </div>
+                    <button type="submit">Postar</button>
+                </div>
+            </form>
         </div>
+        
+
+        {% include "blog/partials/messages.html" %}
 
         {% for post in posts %}
             {% if post.is_repost %}
@@ -25,7 +30,7 @@
                 <p>Reposted from <strong>{{ post.original_post.author.first_name }}</strong></p>
             </div>
         {% endif %}
-            <div class="post-card" >
+            <div class="post-card" id="post-card-{{post.id}}">
                     <div class="post-header">
                         {% if post.is_repost %}
                             <div class="post-author">{{ post.original_post.author.first_name }}</div>
@@ -64,12 +69,17 @@
                     <div class="post-footer">
                         <div class="footer-icon">
                             <span class="post-likes">
-                                <i class="fa fa-thumbs-up"></i> {{ post.like_count }}
+                                <a hx-post="{% url 'blog:toggle_like' post.id  %}" hx-target="#like_counting_sp-{{post.id}}" class="post-link">
+                                    <i class="fa fa-thumbs-up"></i> <span id="like_counting_sp-{{post.id}}" > {{ post.like_count }} </span>
+                                <a/>
+                                
                             </span>
                         </div>
                         <div class="footer-icon">
                             <span class="post-comments">
-                                <i class="fa fa-comment"></i> {{ post.comments.count }}
+                                <a href="{{ post.get_absolute_url }}" class="post-link">
+                                    <i class="fa fa-comment" ></i> {{ post.comments.count }}
+                                </a>
                             </span>
                         </div>
                         <div class="footer-icon">
@@ -83,5 +93,6 @@
         {% empty %}
             <p>No posts available.</p>
         {% endfor %}
+        
     </div>
 {% endblock %}

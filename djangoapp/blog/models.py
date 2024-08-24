@@ -4,6 +4,8 @@ from utils.rands import slugify_new
 from django_summernote.models import AbstractAttachment
 from utils.images import resize_image
 from django.urls import reverse
+from django import forms
+from django_summernote.widgets import SummernoteWidget
 
 # Create your models here.
 
@@ -131,6 +133,9 @@ class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def save(self, *args, **kwargs):
         if not self.author:
             self.author = User.objects.first()
@@ -138,4 +143,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.author.username}: {self.content[:30]}'
-    
+

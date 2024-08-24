@@ -4,26 +4,7 @@
     {% include "blog/partials/_head.html" %}
     {% block additional_head %}{% endblock additional_head %}
 </head>
-<script> 
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.dropdown-toggle').forEach(function (dropdownToggle) {
-            dropdownToggle.addEventListener('click', function (e) {
-                const dropdownMenu = e.target.nextElementSibling;
-                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-            });
-        });
-
-        // Optional: Close dropdown when clicking outside of it
-        document.addEventListener('click', function (e) {
-            if (!e.target.matches('.dropdown-toggle')) {
-                document.querySelectorAll('.dropdown-menu').forEach(function (dropdownMenu) {
-                    dropdownMenu.style.display = 'none';
-                });
-            }
-        });
-    });
-</script>
-<body>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     {% include "blog/partials/_header.html" %}
     {% block content %}
     {% endblock content %}
