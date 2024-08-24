@@ -1,8 +1,17 @@
 <header>
     <div class="header-container">
-        <div class="logo">
-            <h1>{{ site_setup.title }}</h1>
-        </div>
+        {% if request.path == '/'  %}
+            <div>
+                <h1>{{ site_setup.title }}</h1>
+            </div>
+        {% else %}
+            <a href="{% url 'blog:index' %}" class="logo" style="text-decoration: none;">
+                <div>
+                    <h1>{{ site_setup.title }}</h1>
+                </div>
+            </a>
+        {% endif %}
+        
         <form action="{% url 'blog:search' %}" method="get" class="search-bar">
             <i class="fa fa-search" id="search-icon"></i>
             <input type="text" placeholder="Pesquisar..." name="search">

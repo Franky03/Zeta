@@ -1,0 +1,28 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <div class="post-container" id="post-open-cont">  
+        {% include "blog/partials/messages.html" %}
+
+        <div class="create-post" >
+            <form action="{% url 'blog:repost' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="pid" value="{{ post.id }}">
+                <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
+                    <textarea class="txt-post" name="content" placeholder="What's on your mind?"></textarea>
+                </div>
+            
+                {% include "blog/partials/_post_card.html" %}
+                
+                <div class="footer">
+                    <div class="icons-container" style="display: flex; justify-content: space-between;">
+                    </div>
+                    <button type="submit">Repostar</button>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+{% endblock %}

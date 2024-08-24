@@ -434,3 +434,48 @@ header {
     transition: width 5s linear;
 }
 
+.dropdown-rep {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu-rep {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+    font-size: 1.5rem;
+}
+
+.dropdown-menu-rep a {
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-menu-rep a.repost-link:hover, a.repost-write-link:hover{
+    background-color: hsl(210, 100%, 95%);
+    color: hsl(210, 100%, 50%); /* Azul */
+    border-radius: 5px;
+}
+
+.dropdown-rep.clicked .dropdown-menu-rep {
+    display: block;
+}
+
+.new-post-content {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.old-post-content {
+    padding: 10px;
+    background-color: transparent; /* Cor de fundo diferente para destacar o post antigo */
+    border: 1px solid hsl(var(--clr-secondary)); /* Borda ao redor do conteúdo antigo */
+    margin-top: 10px;
+}

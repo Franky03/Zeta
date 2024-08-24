@@ -4,7 +4,7 @@
     {% include "blog/partials/_head.html" %}
     {% block additional_head %}{% endblock additional_head %}
 </head>
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' id="my-body-base">
     {% include "blog/partials/_header.html" %}
     {% block content %}
     {% endblock content %}

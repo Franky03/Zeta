@@ -34,6 +34,37 @@ def create_post(request):
             messages.error(request, 'O conteúdo do post não pode estar vazio.')
             return redirect('blog:index')
 
+def repost_page(request, id):
+    post = Post.objects.get_posts().filter(id=id).first()
+
+    if not post:
+        raise Http404()
+
+    return render(request, 'blog/pages/repost.html', {'post': post, 'page_title': "Home / "})
+
+@login_required
+def repost(request):
+    if request.method == 'POST':
+        content = request.POST.get('content', '')
+        pid = request.POST.get('pid', '')
+        original_post = Post.objects.filter(id=pid).first()
+        
+        post = Post.objects.create(author=request.user, content=content, is_repost=True, original_post=original_post)
+        
+        messages.success(request, 'Repostado')
+        return redirect('blog:index')
+
+@login_required
+def repost_directly(request, pid):
+    if request.method == 'POST':
+        content = request.POST.get('content', '')
+        original_post = Post.objects.filter(id=pid).first()
+        
+        post = Post.objects.create(author=request.user, content=content, is_repost=True, original_post=original_post)
+        
+        messages.success(request, 'Repostado')
+        return redirect('blog:index')
+        
 @login_required
 def create_comment(request):
     if request.method == 'POST':

@@ -12,7 +12,6 @@
         <div class="create-post" >
             <form hx-post="{% url 'blog:comment' %}" 
                 hx-target="#post-open-cont" 
-                hx-swap="outerHTML"
                 enctype="multipart/form-data">
                 {% csrf_token %}
                 <input type="hidden" name="pid" value="{{ post.id }}">

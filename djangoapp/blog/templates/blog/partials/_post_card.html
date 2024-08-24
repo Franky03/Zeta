@@ -21,7 +21,7 @@
             </div>
         {% endif %}
     </div>
-
+    {% if request.path == '/' %}
     <a href="{{ post.get_absolute_url }}" class="post-link">
         <div class="post-content">
             {{ post.content|safe }}
@@ -34,8 +34,20 @@
             {% endif %}
         </div>
     </a>
+    {% else %}
+        <div class="post-content" style="cursor: default;">
+            {{ post.content|safe }}
+            {% if post.image %}
+                <div class="post-image">
+                    <a href="{{ post.image.url }}" target="_blank">
+                        <img src="{{ post.image.url }}" alt="Image related to the post">
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
 
-    
+
     <div class="post-footer">
         <div class="footer-icon">
             <span class="post-likes">
@@ -53,9 +65,16 @@
             </span>
         </div>
         <div class="footer-icon">
-            <span class="post-reposts">
-                <i class="fa fa-retweet"></i> {{ post.reposts_count }}
-            </span>
+            <div class="post-reposts dropdown-rep">
+                <div class="dropdown-toggle-rep"> 
+                    <i class="fa fa-retweet"></i> {{ post.reposts_count }}
+                </div>
+                <div class="dropdown-menu-rep">
+                    <a hx-post="{% url "blog:repost_directly" post.id %}" class="repost-link" hx-target="#my-body-base">Repostar</a>
+                    <a href="{% url "blog:repost_page" post.id %}" class="repost-write-link">Escrever</a>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

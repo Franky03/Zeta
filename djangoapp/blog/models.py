@@ -104,8 +104,11 @@ class Post(models.Model):
         # mas se o post tiver um conteúdo diferente, o conteúdo do post será o conteúdo do post + o conteúdo do post original
 
         if self.is_repost:
-            if self.content != self.original_post.content:
-                self.content = f'{self.content}\n\n{self.original_post.content}'
+            if self.content != '' and self.content != self.original_post.content:
+                self.content = (
+                    f'<div class="new-post-content">{self.content}</div>'
+                    f'<div class="old-post-content">{self.original_post.content}</div>'
+                )
             else:
                 self.content = self.original_post.content
 

@@ -3,11 +3,10 @@
 {% block content %}
     <div class="post-container" id="post-all-cont">
         <!-- Formulário para criar um novo post -->
-         
+        {% if request.path == '/' %}
         <div class="create-post" >
             <form hx-post="{% url 'blog:create_post' %}" 
-                hx-target="#post-all-cont" 
-                hx-swap="outerHTML"
+                hx-target="#my-body-base"
                 enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
@@ -22,6 +21,7 @@
                 </div>
             </form>
         </div>
+        {% endif %}
         
 
         {% include "blog/partials/messages.html" %}
@@ -40,4 +40,6 @@
         {% endfor %}
         
     </div>
+
 {% endblock %}
+
