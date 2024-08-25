@@ -1,8 +1,7 @@
 from typing import Any
-from blog.models import Post, Comment, Like
+from blog.models import Post, Comment, Like, User
 from blog.forms import CommentForm, PostForm
 from django.db.models import Q
-from django.contrib.auth.models import User
 from django.views.generic import ListView,DetailView
 from django.views.generic.edit import FormView,CreateView
 from django.views import View

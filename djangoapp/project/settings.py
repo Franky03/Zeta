@@ -81,6 +81,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project.wsgi.application'
 SUMMERNOTE_THEME = 'bs5'
+AUTH_USER_MODEL = 'blog.User'
+
 
 SUMMERNOTE_CONFIG = {
     'summernote': {

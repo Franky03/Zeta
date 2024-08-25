@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blog.models import Tag, Category, Post, Comment, Like
+from blog.models import Tag, Category, Post, Comment, Like, User
 from django_summernote.admin import SummernoteModelAdmin
 from django.urls import reverse
 
