@@ -35,7 +35,7 @@
                 {% for comment in post.comments.all %}
                 <div class="comment-container">
                     <div class="comment-header">
-                        <div class="comment-author">{{ comment.author.username }}</div>
+                        <div class="comment-author">{{ comment.author.first_name }}</div>
                         <div class="comment-date">{{ comment.created_at|date:"d M Y, H:i" }}</div>
                         {% if comment.author == user %}
                             <div class="dropdown">

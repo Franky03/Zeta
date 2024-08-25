@@ -5,7 +5,7 @@
         <div id="modalPostContent">
             <div class="post-card">
                 <div class="post-header">
-                    <div class="post-author">{{ post.author.username }}</div>
+                    <div class="post-author">{{ post.author.first_name }}</div>
                     <div class="post-date">{{ post.created_at|date:"d M Y, H:i" }}</div>
                     {% if post.author == user %}
                         <div class="dropdown">

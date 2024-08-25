@@ -1,25 +1,27 @@
 from typing import Any
 from blog.models import Post, Comment, Like
+from blog.forms import CommentForm, PostForm
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.views.generic import ListView,DetailView
+from django.views.generic.edit import FormView,CreateView
+from django.views import View
 
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
+
+
 
 def handler404(request, template_name="blog/pages/404.html"):
     response = render(template_name)
     response.status_code = 404
     return response
 
-# Create your views here.
-def index(request):
-    posts = Post.objects.get_posts()
-    # SELECT * FROM posts ORDER BY created_at DESC 
-
-    return render(request, 'blog/pages/index.html', {'posts': posts, 'page_title': "Home / "})
 
 @login_required
 def create_post(request):
@@ -33,6 +35,22 @@ def create_post(request):
         else:
             messages.error(request, 'O conteúdo do post não pode estar vazio.')
             return redirect('blog:index')
+        
+class CreatePostView(LoginRequiredMixin, CreateView):
+    model = Post
+    form_class = PostForm
+ 
+    success_url = reverse_lazy('blog:index')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user  # Define o usuário como autor do post
+        response = super().form_valid(form)
+        messages.success(self.request, 'Post publicado!')
+        return response
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'O conteúdo do post não pode estar vazio.')
+        return redirect('blog:index')
 
 def repost_page(request, id):
     post = Post.objects.get_posts().filter(id=id).first()
@@ -65,37 +83,38 @@ def repost_directly(request, pid):
         messages.success(request, 'Repostado')
         return redirect('blog:index')
         
-@login_required
-def create_comment(request):
-    if request.method == 'POST':
-        content = request.POST.get('content', '')
-        post_id = request.POST.get('pid', '')
-        post_id = int(post_id)
-        if content.strip():
-            post = Post.objects.filter(id=post_id).first()
-            commment = Comment.objects.create(author=request.user, post=post,content=content)
-            
-            messages.success(request, 'Comentário publicado!')
-            return redirect('blog:post', id=post_id)
-        else:
-            messages.error(request, 'O conteúdo do comentário não pode estar vazio.')
-            return redirect('blog:post', id=post_id)
+class CreateCommentView(LoginRequiredMixin, FormView):
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        content = form.cleaned_data['content']
+        post_id = int(self.request.POST.get('pid', ''))
+        post = get_object_or_404(Post, id=post_id)
+
+        Comment.objects.create(author=self.request.user, post=post, content=content)
+        messages.success(self.request, 'Comentário publicado!')
+
+        return redirect('blog:post', id=post_id)
+
+    def form_invalid(self, form):
+        post_id = int(self.request.POST.get('pid', ''))
+        messages.error(self.request, 'O conteúdo do comentário não pode estar vazio.')
+        return redirect('blog:post', id=post_id)
         
-@login_required
-def toggle_like(request, post_id):
-    post = Post.objects.filter(id=post_id).first() # SELECT * FROM post WHERE id = post_id;
-    user = request.user
+class ToggleLikeView(LoginRequiredMixin, View):
+    def post(self, request, post_id, *args, **kwargs):
+        post = get_object_or_404(Post, id=post_id) # SELECT * FROM post WHERE id = post_id;
+        user = request.user
 
-    user = User.objects.filter(username=user).first()
-    existing_like = Like.objects.filter(user=user, post=post).first() # SELECT * FROM like WHERE user_id = user_id AND post_id = post_id LIMIT 1;
+        existing_like = Like.objects.filter(user=user, post=post).first() # SELECT * FROM like WHERE user_id = user_id AND post_id = post_id LIMIT 1;
 
-    if existing_like:
-        existing_like.delete() # DELETE FROM like WHERE user_id = user_id AND post_id = post_id;
-    else:
-        Like.objects.create(user=user, post=post) # INSERT INTO like (user_id, post_id) VALUES (user_id, post_id);
+        if existing_like:
+            existing_like.delete() # DELETE FROM like WHERE user_id = user_id AND post_id = post_id;
+        else:
+            Like.objects.create(user=user, post=post) # INSERT INTO like (user_id, post_id) VALUES (user_id, post_id);
 
-    return HttpResponse(str(post.likes.count()))
-
+        return HttpResponse(str(post.likes.count()))
+    
 class PostsListView(ListView):
     model = Post
     template_name = 'blog/pages/index.html'
@@ -136,9 +155,6 @@ class PostUniqueView(DetailView):
 
         return post
 
-
-def page(request):
-    return render(request, 'blog/pages/page.html')  
 
 def post(request, id):
     post = Post.objects.get_posts().filter(id=id).first()
