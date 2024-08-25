@@ -103,8 +103,11 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 
 // Reaplicar as funções após um hx-swap
-document.addEventListener('htmx:afterSwap', function () {
-    initializeDropdowns();
-    initializeNotifications();
-    initializeDropdownsRep();
+document.addEventListener('htmx:afterSettle', function (event) {
+    if(! event.target.id.startsWith("like_counting_sp")) // tirar essa gambiarra aqui
+    {    
+        initializeDropdowns();
+        initializeNotifications();
+        initializeDropdownsRep();
+    }
 });

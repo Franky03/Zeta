@@ -3,36 +3,11 @@
 {% block content %}
     <div class="post-container" id="post-all-cont">
         <!-- Formulário para criar um novo post -->
-        {% if request.path == '/' %}
-        <div class="create-post" >
-            <form hx-post="{% url 'blog:create_post' %}" 
-                hx-target="#my-body-base"
-                enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
-                    <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
-                    <textarea class="txt-post" name="content" placeholder="What's on your mind?"></textarea>
-                </div>
-                
-                <div class="footer">
-                    <div class="icons-container" style="display: flex; justify-content: space-between;">
-                    </div>
-                    <button type="submit">Postar</button>
-                </div>
-            </form>
-        </div>
-        {% endif %}
+        {% include "blog/partials/_create_post.html" %}
         
-
         {% include "blog/partials/messages.html" %}
 
         {% for post in posts %}
-            {% if post.is_repost %}
-            <div class="repost-info">
-                <i class="fa-solid fa-rotate"></i> <!-- Ícone indicando repost -->
-                <p>Reposted from <strong>{{ post.original_post.author.first_name }}</strong></p>
-            </div>
-            {% endif %}
             {% include "blog/partials/_post_card.html" %}
             
         {% empty %}

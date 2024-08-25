@@ -36,6 +36,20 @@ def create_post(request):
             messages.error(request, 'O conteúdo do post não pode estar vazio.')
             return redirect('blog:index')
         
+@login_required
+def update_post_pre(request, pid):
+    print("Post Id: ", pid)
+    post = get_object_or_404(Post, id=pid)
+    return render(request, 'blog/partials/_update_post.html', {'existing_content': post.content, 'post_id': pid})
+
+@login_required
+def update_post_pos(request, pid):
+    post = get_object_or_404(Post, id=pid)
+    if request.method == 'POST':
+        post.content = request.POST.get('content', '')
+        post.save()
+        return render(request, 'blog/partials/_post_card.html', {'post': post})
+
 class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
@@ -113,7 +127,7 @@ class ToggleLikeView(LoginRequiredMixin, View):
         else:
             Like.objects.create(user=user, post=post) # INSERT INTO like (user_id, post_id) VALUES (user_id, post_id);
 
-        return HttpResponse(str(post.likes.count()))
+        return HttpResponse(str(post.likes.count()), content_type="text/plain")
     
 class PostsListView(ListView):
     model = Post

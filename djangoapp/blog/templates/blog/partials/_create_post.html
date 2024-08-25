@@ -1,0 +1,22 @@
+
+{% if request.path == '/' %}
+    <div class="create-post" >
+        <form hx-post="{% url 'blog:create_post' %}" 
+            hx-target="#my-body-base"
+            enctype="multipart/form-data"
+            hx-swap="outerHTML"
+            >
+            {% csrf_token %}
+            <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
+                <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
+                <textarea class="txt-post" name="content" placeholder="What's on your mind?"></textarea>
+            </div>
+            
+            <div class="footer">
+                <div class="icons-container" style="display: flex; justify-content: space-between;">
+                </div>
+                <button type="submit">Postar</button>
+            </div>
+        </form>
+    </div>
+{% endif %}
