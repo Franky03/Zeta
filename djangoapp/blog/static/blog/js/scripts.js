@@ -112,14 +112,14 @@ document.addEventListener("htmx:beforeRequest", function(evt) {
         evt.preventDefault();
 
         Swal.fire({
-            title: 'Você tem certeza?',
-            text: "Você quer deletar esse post?",
+            title: 'Are you sure?',
+            text: "Do you want to delete the post?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: 'rgb(124, 0, 254)',
             cancelButtonColor: '#d33',
-            cancelButtonText: 'Não, cancelar!',
-            confirmButtonText: 'Sim, deletar!',
+            cancelButtonText: 'No, cancel!',
+            confirmButtonText: 'Yes, delete it!',
             
         }).then((result) => {
             if(result.isConfirmed){

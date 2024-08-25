@@ -13,7 +13,7 @@
                 <input type="hidden" name="pid" value="{{ post.id }}">
                 <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
                     <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
-                    <textarea class="txt-post" name="content" placeholder="Comece a escrever seu post..."></textarea>
+                    <textarea class="txt-post" name="content" placeholder="Type your message here..."></textarea>
                 </div>
             
                 {% include "blog/partials/_post_card.html" %}
@@ -21,7 +21,7 @@
                 <div class="footer">
                     <div class="icons-container" style="display: flex; justify-content: space-between;">
                     </div>
-                    <button type="submit">Repostar</button>
+                    <button type="submit">Repost</button>
                 </div>
             </form>
         </div>
@@ -40,13 +40,13 @@
         <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
             <input type="hidden" name="pid" value="{{ post.id }}">
             <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
-            <textarea class="txt-post" name="content" placeholder="Comece a escrever seu post..."></textarea>
+            <textarea class="txt-post" name="content" placeholder="Type your message here..."></textarea>
         </div>
         
         <div class="footer">
             <div class="icons-container" style="display: flex; justify-content: space-between;">
             </div>
-            <button type="submit">Postar</button>
+            <button type="submit">Post</button>
         </div>
     </form>
 </div>

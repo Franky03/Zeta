@@ -25,10 +25,10 @@
                 <div class="dropdown">
                     <button class="dropdown-toggle">⋮</button>
                     <div class="dropdown-menu">
-                        <a hx-post="{% url "blog:update_post_pre" post.id %}" class="edit-link" hx-target="#post-card-{{ post.id }}">Editar</a>
+                        <a hx-post="{% url "blog:update_post_pre" post.id %}" class="edit-link" hx-target="#post-card-{{ post.id }}">Edit</a>
                         <form hx-post="{% url 'blog:delete_post' post.id %}" hx-target="#my-body-base" method="post" id="delete-link-btn" >
                             {% csrf_token %} <!-- Certifique-se de incluir o token CSRF se estiver usando Django -->
-                            <button type="submit" class="delete-link">Deletar</button>
+                            <button type="submit" class="delete-link">Delet</button>
                         </form>
                     </div>
                 </div>
@@ -84,8 +84,8 @@
                     <i class="fa fa-retweet"></i> {{ post.reposts_count }}
                 </div>
                 <div class="dropdown-menu-rep">
-                    <a hx-post="{% url "blog:repost_directly" post.id %}" class="repost-link" hx-target="#my-body-base">Repostar</a>
-                    <a href="{% url "blog:repost_page" post.id %}" class="repost-write-link">Escrever</a>
+                    <a hx-post="{% url "blog:repost_directly" post.id %}" class="repost-link" hx-target="#my-body-base">Repost</a>
+                    <a href="{% url "blog:repost_page" post.id %}" class="repost-write-link">Write</a>
                 </div>
 
             </div>
