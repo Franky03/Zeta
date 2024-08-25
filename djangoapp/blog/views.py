@@ -33,7 +33,6 @@ def create_post(request):
             messages.success(request, 'Post publicado!')
             return redirect('blog:index')
         else:
-            messages.error(request, 'O conteúdo do post não pode estar vazio.')
             return redirect('blog:index')
         
 @login_required
