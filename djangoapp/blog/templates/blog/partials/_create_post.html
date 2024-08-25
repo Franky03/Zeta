@@ -8,7 +8,7 @@
             >
             {% csrf_token %}
             <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
-                <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
+                <img src="{{user.avatar.url}}" alt="Profile Picture" class="profile-pic">
                 <textarea class="txt-post" name="content" placeholder="Type your message here..."></textarea>
             </div>
             

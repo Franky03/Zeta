@@ -1,8 +1,10 @@
+{% load static %}
+
 <header>
     <div class="header-container">
         {% if request.path == '/'  %}
             <div>
-                <h1>{{ site_setup.title }}</h1>
+                <h1><i>{{ site_setup.title }}</i></h1>
             </div>
         {% else %}
             <a href="{% url 'blog:index' %}" class="logo" style="text-decoration: none;">
@@ -19,7 +21,7 @@
         </form>
         <div class="user-profile">
             <div class="profile-pic-container">
-                <img src="perfil.jpg" alt="Foto do perfil" class="profile-pic">
+                <img src="{{user.avatar.url}}" alt="Foto do perfil" class="profile-pic">
             </div>
         </div>
     </div>

@@ -59,7 +59,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     bio = models.TextField(max_length=500, blank=True, null=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
-    following = models.ManyToManyField('self', symmetrical=False, related_name='followers', default=0)
+    following = models.ManyToManyField('self', symmetrical=False, related_name='followers', default=0, blank=True, null=True)
     # symmetrical=False, significa que a relação não é simétrica, ou seja, se eu sigo você, você não me segue automaticamente e vice-versa
     # related_name='followers', é o nome que eu vou usar para acessar os seguidores de um usuário
 

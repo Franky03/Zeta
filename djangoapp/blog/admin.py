@@ -6,6 +6,29 @@ from django.urls import reverse
 class CommentInline(admin.TabularInline):
     model = Comment
     extra = 1 
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = 'id', 'username', 'email','date_joined'
+    list_display_links = 'username',
+    search_fields = 'id', 'username', 'email',
+    list_per_page = 10
+    ordering = '-id',
+    list_filter = 'is_staff', 'is_active', 'is_trusty'
+    readonly_fields = 'date_joined',
+    actions = ['make_trusty', 'make_untrusty']
+
+    def make_trusty(self, request, queryset):
+        queryset.update(is_trusty=True)
+        self.message_user(request, 'Usuários marcados como confiáveis com sucesso!')
+
+    make_trusty.short_description = 'Marcar como confiável'
+
+    def make_untrusty(self, request, queryset):
+        queryset.update(is_trusty=False)
+        self.message_user(request, 'Usuários desmarcados como confiáveis com sucesso!')
+
+    make_untrusty.short_description = 'Desmarcar como confiável'
     
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
