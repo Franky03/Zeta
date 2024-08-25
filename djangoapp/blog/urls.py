@@ -1,4 +1,4 @@
-from blog.views import repost_page,repost,repost_directly,update_post_pre,update_post_pos, delete_post
+from blog.views import repost_page,repost,repost_directly,update_post_pre,update_post_pos, delete_post,update_comment_pos,update_comment_pre,delete_comment
 from blog.views import ToggleLikeView,CreateCommentView, CreatePostView
 from blog.views import SearchListView,PostsListView,  PostUniqueView
 from django.urls import path
@@ -20,8 +20,11 @@ htmx_urlpatterns = [
     path('post/<int:post_id>/like/', ToggleLikeView.as_view(), name='toggle_like'),
     path('repost_directly/<int:pid>', repost_directly, name='repost_directly'),
     path('update_post_pre/<int:pid>', update_post_pre, name='update_post_pre'),
-    path('update_post_pos/<int:pid>', update_post_pos, name='update_post_pos'),
-    path('delete_post/<int:pid>', delete_post, name='delete_post')
+    path('update_post_pos/', update_post_pos, name='update_post_pos'),
+    path('delete_post/<int:pid>', delete_post, name='delete_post'),
+    path('update_comment_pos/', update_comment_pos, name='update_comment_pos'),
+    path('update_comment_pre/<int:cpk>', update_comment_pre, name='update_comment_pre'),
+    path('delete_comment/', delete_comment, name='delete_comment'),
 ]
 
 urlpatterns += htmx_urlpatterns

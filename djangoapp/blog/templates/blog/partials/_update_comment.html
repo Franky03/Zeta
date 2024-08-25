@@ -1,0 +1,21 @@
+<div class="create-post" >
+    <form hx-post="{% url 'blog:update_comment_pos' %}" 
+        hx-target="#comment-cont-{{ comment_pk }}" 
+        hx-swap="outerHTML"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="cpk" value="{{ comment_pk }}">
+        <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
+            <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
+            <textarea class="txt-post" name="content" placeholder="Type your comment here...">{{existing_content}}</textarea>
+        </div>
+        
+        <div class="footer">
+            
+                <a hx-post="{% url "blog:update_comment_pos" %}" hx-target="#comment-cont-{{ comment_pk }}" hx-swap="outerHTML" class="cancel-button" id="cancel-edit-post">Cancel</a>
+                <button type="submit">Comment</button>
+            
+        </div>
+    </form>
+</div>
+

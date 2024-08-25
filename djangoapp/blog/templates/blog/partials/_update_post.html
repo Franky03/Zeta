@@ -1,18 +1,19 @@
 <div class="create-post" >
     <form
-        hx-post="{% url "blog:update_post_pos" post_id %}"
+        hx-post="{% url "blog:update_post_pos" %}"
         hx-target="#post-card-{{ post_id }}"
         enctype="multipart/form-data"
         hx-swap="outerHTML"
         >
         {% csrf_token %}
+        <input type="hidden" name="pid" value="{{ post_id }}">
         <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
             <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
             <textarea class="txt-post" name="content" placeholder="Type your message here...">{{ existing_content }}</textarea>
         </div>
         
         <div class="footer">
-            <a hx-post="{% url "blog:update_post_pos" post_id %}" hx-target="#post-card-{{ post_id }}" hx-swap="outerHTML" class="cancel-button" id="cancel-edit-post">Cancel</a>
+            <a hx-post="{% url "blog:update_post_pos" %}" hx-target="#post-card-{{ post_id }}" hx-swap="outerHTML" class="cancel-button" id="cancel-edit-post">Cancel</a>
             <button type="submit">Edit</button>
         </div>
     </form>

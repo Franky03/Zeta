@@ -42,7 +42,8 @@ def update_post_pre(request, pid):
     return render(request, 'blog/partials/_update_post.html', {'existing_content': post.content, 'post_id': pid})
 
 @login_required
-def update_post_pos(request, pid):
+def update_post_pos(request):
+    pid = request.POST.get('pid', '')
     post = get_object_or_404(Post, id=pid)
     if request.method == 'POST':
         new_content = request.POST.get('content', '').strip()
@@ -61,6 +62,33 @@ def update_post_pos(request, pid):
         post.save()
 
         return render(request, 'blog/partials/_post_card.html', {'post': post})
+    
+@login_required
+def update_comment_pre(request, cpk):
+    comment = get_object_or_404(Comment, pk=cpk)
+    return render(request, 'blog/partials/_update_comment.html', {'existing_content': comment.content, 'comment_pk': cpk})
+
+@login_required
+def update_comment_pos(request):
+    cpk = request.POST.get('cpk', '')
+    comment = get_object_or_404(Comment, pk=cpk)
+    if request.method == 'POST':
+        new_content = request.POST.get('content', '').strip()
+
+        # Verifica se o conteúdo é vazio
+        if not new_content:
+            messages.error(request, "O conteúdo do comentário não pode ser vazio.")
+            return render(request, 'blog/partials/_comment_card.html', {'comment': comment})
+
+        # Verifica se o conteúdo não mudou
+        if new_content == comment.content:
+            return render(request, 'blog/partials/_comment_card.html', {'comment': comment})
+
+        # Se o conteúdo é válido e mudou, salva as alterações
+        comment.content = new_content
+        comment.save()
+
+        return render(request, 'blog/partials/_comment_card.html', {'comment': comment})
 
 class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
@@ -118,6 +146,17 @@ def delete_post(request, pid):
         messages.success(request, "O post foi deletado com sucesso.")
     
     return redirect('blog:index')
+
+@login_required
+def delete_comment(request):
+    if request.method == 'POST':
+        cpk = request.POST.get('cpk', '')
+        comment = get_object_or_404(Comment, pk=cpk)
+        comment.delete()
+        messages.success(request, "O comentário foi deletado com sucesso.")
+    
+    return redirect('blog:post', id=comment.post.id)
+
 
 class CreateCommentView(LoginRequiredMixin, FormView):
     form_class = CommentForm

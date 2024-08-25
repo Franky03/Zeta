@@ -28,14 +28,14 @@
                         <a hx-post="{% url "blog:update_post_pre" post.id %}" class="edit-link" hx-target="#post-card-{{ post.id }}">Edit</a>
                         <form hx-post="{% url 'blog:delete_post' post.id %}" hx-target="#my-body-base" method="post" id="delete-link-btn" >
                             {% csrf_token %} <!-- Certifique-se de incluir o token CSRF se estiver usando Django -->
-                            <button type="submit" class="delete-link">Delet</button>
+                            <button type="submit" class="delete-link">Delete</button>
                         </form>
                     </div>
                 </div>
             {% endif %}
         {% endif %}
     </div>
-    {% if request.path == '/' %}
+    {% if "post/" not in request.path %}
     <a href="{{ post.get_absolute_url }}" class="post-link">
         <div class="post-content">
             {{ post.content|safe }}

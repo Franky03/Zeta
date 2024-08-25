@@ -125,13 +125,39 @@ document.addEventListener("htmx:beforeRequest", function(evt) {
             if(result.isConfirmed){
                 htmx.ajax("POST", evt.detail.pathInfo.finalRequestPath, {
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    swap: 'innerHTML',  // This defines where the response should be swapped
+                    swap: 'outerHTML',  // This defines where the response should be swapped
                     target: '#my-body-base',  // This defines the element to receive the response
                     values: new FormData(evt.target)
                 });
             }
         });
     }
+
+    if(evt.target.id.includes('delete-comment-btn')){
+        evt.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to delete the comment?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'rgb(124, 0, 254)',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'No, cancel!',
+            confirmButtonText: 'Yes, delete it!',
+            
+        }).then((result) => {
+            if(result.isConfirmed){
+                htmx.ajax("POST", evt.detail.pathInfo.finalRequestPath, {
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    swap: 'outerHTML',  // This defines where the response should be swapped
+                    target: '#post-open-cont',  // This defines the element to receive the response
+                    values: new FormData(evt.target)
+                });
+            }
+        });
+    }
+
 });
 // Reaplicar as funções após um hx-swap
 document.addEventListener('htmx:afterRequest', function (event) {

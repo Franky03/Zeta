@@ -1,0 +1,25 @@
+{% include "blog/partials/messages.html" %}
+
+<div class="comment-container" id="comment-cont-{{comment.pk}}">
+    <div class="comment-header">
+        <div class="comment-author">{{ comment.author.first_name }}</div>
+        <div class="comment-date">{{ comment.created_at|date:"d M Y, H:i" }}</div>
+        {% if comment.author == user or user.is_superuser %}
+            <div class="dropdown">
+                <button class="dropdown-toggle">⋮</button>
+                <div class="dropdown-menu">
+                    <a hx-post="{% url "blog:update_comment_pre" comment.pk %}" class="edit-link" hx-target="#comment-cont-{{comment.pk}}">Edit</a>
+
+                    <form hx-post="{% url 'blog:delete_comment' %}" hx-target="#post-open-cont" method="post" id="delete-comment-btn" hx-swap="outerHTML">
+                        <input type="hidden" name="cpk" value="{{ comment.pk }}">
+                        {% csrf_token %} <!-- Certifique-se de incluir o token CSRF se estiver usando Django -->
+                        <button type="submit" class="delete-link">Delete</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="comment-content" id="comment-text-cont-{{comment.pk}}"> 
+        {{ comment.content|safe }}
+    </div>
+</div>
