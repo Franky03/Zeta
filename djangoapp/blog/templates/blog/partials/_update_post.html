@@ -8,12 +8,11 @@
         {% csrf_token %}
         <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
             <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
-            <textarea class="txt-post" name="content" placeholder="What's on your mind?">{{ existing_content }}</textarea>
+            <textarea class="txt-post" name="content" placeholder="Comece a escrever seu post...">{{ existing_content }}</textarea>
         </div>
         
         <div class="footer">
-            <div class="icons-container" style="display: flex; justify-content: space-between;">
-            </div>
+            <a hx-post="{% url "blog:update_post_pos" post_id %}" hx-target="#post-card-{{ post_id }}" hx-swap="outerHTML" class="cancel-button" id="cancel-edit-post">Cancelar</a>
             <button type="submit">Editar</button>
         </div>
     </form>

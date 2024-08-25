@@ -6,6 +6,7 @@
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' id="my-body-base">
     {% include "blog/partials/_header.html" %}
+    {% include "blog/partials/messages.html" %}
     {% block content %}
     {% endblock content %}
     {% include "blog/partials/_footer.html" %}

@@ -102,10 +102,48 @@ window.addEventListener('DOMContentLoaded', function () {
     initializeNotifications();
 });
 
+document.addEventListener("htmx:beforeRequest", function(evt) {
+    evt.detail.triggeringElement = evt.target;
+    console.log(evt)
+    console.log(evt.detail)
+    console.log(evt.target)
+    // quero saber se o id delete-link-btn está dentro do target.id
+    if(evt.target.id.includes('delete-link-btn')){
+        evt.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to delete the post?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if(result.isConfirmed){
+                htmx.ajax("POST", evt.detail.pathInfo.finalRequestPath, {
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    swap: 'innerHTML',  // This defines where the response should be swapped
+                    target: '#my-body-base',  // This defines the element to receive the response
+                    values: new FormData(evt.target)
+                });
+            }
+        });
+    }
+});
 // Reaplicar as funções após um hx-swap
-document.addEventListener('htmx:afterSettle', function (event) {
-    if(! event.target.id.startsWith("like_counting_sp")) // tirar essa gambiarra aqui
+document.addEventListener('htmx:afterRequest', function (event) {
+    if(!event.target.id.startsWith("like_counting_sp") || event.detail.triggeringElement.id === "cancel-edit-post") // tirar essa gambiarra aqui
     {    
+        initializeDropdowns();
+        initializeNotifications();
+        initializeDropdownsRep();
+    }
+});
+
+document.addEventListener('htmx:afterSettle', function (event) {
+    if(event.target.id.startsWith("like_counting_sp")){
         initializeDropdowns();
         initializeNotifications();
         initializeDropdownsRep();

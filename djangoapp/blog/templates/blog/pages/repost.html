@@ -5,12 +5,15 @@
         {% include "blog/partials/messages.html" %}
 
         <div class="create-post" >
-            <form action="{% url 'blog:repost' %}" method="post" enctype="multipart/form-data">
+            <form hx-post="{% url 'blog:repost' %}" 
+                hx-target="#my-body-base"
+                enctype="multipart/form-data"
+                hx-swap="outerHTML">
                 {% csrf_token %}
                 <input type="hidden" name="pid" value="{{ post.id }}">
                 <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
                     <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
-                    <textarea class="txt-post" name="content" placeholder="What's on your mind?"></textarea>
+                    <textarea class="txt-post" name="content" placeholder="Comece a escrever seu post..."></textarea>
                 </div>
             
                 {% include "blog/partials/_post_card.html" %}
@@ -26,3 +29,24 @@
 
     </div>
 {% endblock %}
+
+<div class="create-post" >
+    <form hx-post="{% url 'blog:repost' %}" 
+        hx-target="#my-body-base"
+        enctype="multipart/form-data"
+        hx-swap="outerHTML"
+        >
+        {% csrf_token %}
+        <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
+            <input type="hidden" name="pid" value="{{ post.id }}">
+            <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
+            <textarea class="txt-post" name="content" placeholder="Comece a escrever seu post..."></textarea>
+        </div>
+        
+        <div class="footer">
+            <div class="icons-container" style="display: flex; justify-content: space-between;">
+            </div>
+            <button type="submit">Postar</button>
+        </div>
+    </form>
+</div>

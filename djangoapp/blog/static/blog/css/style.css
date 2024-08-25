@@ -243,7 +243,7 @@ header {
     font-size: 1.2rem;
     color: hsl(0, 0%, 40%);
     position: relative;
-    right: 170px;
+    margin-bottom: 15px;
 }
 
 .repost-info i {
@@ -289,6 +289,21 @@ header {
 
 .footer-icon:hover {
     color: var(--clr_purple); /* Azul no hover */
+}
+
+.cancel-button{
+    text-decoration: none;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.cancel-button:hover{
+    background-color: hsl(0, 100%, 95%);
+    color: hsl(0, 100%, 50%); /* Vermelho */
+    border-radius: 5px;
 }
 
 .post-edit a {
@@ -344,6 +359,27 @@ header {
 }
 
 .dropdown-menu a.delete-link:hover {
+    background-color: hsl(0, 100%, 95%);
+    color: hsl(0, 100%, 50%); /* Vermelho */
+    border-radius: 5px;
+}
+
+.dropdown-menu button {
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    background: none;
+    border: none; 
+    cursor: pointer; 
+    text-align: left;
+    font-size: 1.6rem;
+    width: 100%;
+    
+}
+
+/* Estilos para o botão quando estiver em hover */
+.dropdown-menu button.delete-link:hover {
     background-color: hsl(0, 100%, 95%);
     color: hsl(0, 100%, 50%); /* Vermelho */
     border-radius: 5px;
@@ -448,7 +484,7 @@ header {
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 5px;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
 }
 
 .dropdown-menu-rep a {

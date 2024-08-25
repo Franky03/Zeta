@@ -46,8 +46,21 @@ def update_post_pre(request, pid):
 def update_post_pos(request, pid):
     post = get_object_or_404(Post, id=pid)
     if request.method == 'POST':
-        post.content = request.POST.get('content', '')
+        new_content = request.POST.get('content', '').strip()
+
+        # Verifica se o conteúdo é vazio
+        if not new_content:
+            messages.error(request, "O conteúdo do post não pode ser vazio.")
+            return render(request, 'blog/partials/_post_card.html', {'post': post})
+
+        # Verifica se o conteúdo não mudou
+        if new_content == post.content:
+            return render(request, 'blog/partials/_post_card.html', {'post': post})
+
+        # Se o conteúdo é válido e mudou, salva as alterações
+        post.content = new_content
         post.save()
+
         return render(request, 'blog/partials/_post_card.html', {'post': post})
 
 class CreatePostView(LoginRequiredMixin, CreateView):
@@ -68,7 +81,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 
 def repost_page(request, id):
     post = Post.objects.get_posts().filter(id=id).first()
-
+    print(request.path)
     if not post:
         raise Http404()
 
@@ -96,7 +109,17 @@ def repost_directly(request, pid):
         
         messages.success(request, 'Repostado')
         return redirect('blog:index')
-        
+    
+@login_required
+def delete_post(request, pid):
+    post = get_object_or_404(Post, id=pid)
+
+    if request.method == 'POST':
+        post.delete()
+        messages.success(request, "O post foi deletado com sucesso.")
+    
+    return redirect('blog:index')
+
 class CreateCommentView(LoginRequiredMixin, FormView):
     form_class = CommentForm
 

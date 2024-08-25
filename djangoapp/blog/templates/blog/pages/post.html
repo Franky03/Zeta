@@ -17,20 +17,20 @@
                 <input type="hidden" name="pid" value="{{ post.id }}">
                 <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
                     <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
-                    <textarea class="txt-post" name="content" placeholder="Comment here"></textarea>
+                    <textarea class="txt-post" name="content" placeholder="Comece a escrever seu comentário..."></textarea>
                 </div>
                 
                 <div class="footer" style="margin-top: 10px;">
                     <div class="icons-container" style="display: flex; justify-content: space-between;">
                     </div>
-                    <button type="submit" style="margin-top: 10px;">Comment</button>
+                    <button type="submit" style="margin-top: 10px;">Comentar</button>
                 </div>
             </form>
         </div>
 
         <!-- Comments Section -->
         <div class="comments-section">
-            <h2>Comments</h2>
+            <h2>Comentários</h2>
             {% if post.comments.count > 0 %}
                 {% for comment in post.comments.all %}
                 <div class="comment-container">
@@ -53,7 +53,7 @@
                 </div>
                 {% endfor %}
             {% else %}
-                <p>No comments yet.</p>
+                <p>Nenhum comentário ainda 😞</p>
             {% endif %}
         </div>
     </div>
