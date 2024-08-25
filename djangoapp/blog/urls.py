@@ -1,4 +1,4 @@
-from blog.views import PostsListView, PostUniqueView, search, repost_page,repost,repost_directly, ToggleLikeView,CreateCommentView, CreatePostView
+from blog.views import PostsListView, PostUniqueView, search, repost_page,repost,repost_directly, ToggleLikeView,CreateCommentView, CreatePostView,SearchListView
 from django.urls import path
 
 
@@ -7,7 +7,7 @@ app_name = 'blog'
 urlpatterns = [
     path('', PostsListView.as_view(), name='index'),
     path('post/<int:id>/', PostUniqueView.as_view(), name='post'),
-    path('search', search, name='search'),
+    path('search', SearchListView.as_view(), name='search'),
     path('create-post/', CreatePostView.as_view(), name='create_post'),
     path('comment/', CreateCommentView.as_view(), name='comment'),
     path('repost_page/<int:id>', repost_page, name='repost_page'),

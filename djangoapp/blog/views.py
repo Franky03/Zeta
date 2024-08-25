@@ -175,3 +175,20 @@ def search(request):
 
     return render(request, 'blog/pages/index.html', {'posts': posts, 'search_value': search_value, 'page_title': f"{search_value} — Search / "} )
 
+class SearchListView(ListView):
+    model = Post
+    template_name = 'blog/pages/index.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        search_value = self.request.GET.get('search', '').strip()
+        return Post.objects.get_posts().filter(
+            Q(content__icontains=search_value)
+        )
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search_value = self.request.GET.get('search', '').strip()
+        context['search_value'] = search_value
+        context['page_title'] = f"{search_value} — Search / "
+        return context

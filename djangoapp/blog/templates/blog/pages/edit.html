@@ -1,0 +1,29 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <div class="post-container" id="post-open-cont">  
+        {% include "blog/partials/messages.html" %}
+        <!-- Post Details -->
+
+        <div class="create-post" >
+            <form hx-post="{% url 'blog:edit_post' %}" 
+                hx-target="#my-body-base"
+                enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="pid" value="{{ post.id }}">
+                <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
+                    <textarea class="txt-post" name="content" placeholder="What's on your mind?">{{ post.content }}</textarea>
+                </div>
+                
+                <div class="footer">
+                    <div class="icons-container" style="display: flex; justify-content: space-between;">
+                    </div>
+                    <button type="submit">Editar</button>
+                </div>
+            </form>
+        </div>
+        
+        </div>
+    </div>
+{% endblock %}
