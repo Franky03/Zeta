@@ -158,6 +158,12 @@ header {
     margin-right: 10px; /* Espaçamento entre a imagem e o campo de texto */
 }
 
+img.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
 .create-post textarea {
     flex: 1;
     background-color: transparent; /* Fundo transparente */

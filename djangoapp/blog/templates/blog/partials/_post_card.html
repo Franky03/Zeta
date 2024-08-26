@@ -1,15 +1,21 @@
 {% include "blog/partials/messages.html" %}
+{% load static %}
 
 <div class="post-card" id="post-card-{{post.id}}">
     {% if  "repost_page" not in request.path %}
         {% if post.is_repost %}
             <div class="repost-info">
                 <i class="fa-solid fa-rotate"></i> <!-- Ícone indicando repost -->
-                <p>Reposted from <strong>{{ post.original_post.author.first_name }}</strong></p>
+                <p> <strong>{{ post.author.first_name }}</strong> Reposted from <strong>{{ post.original_post.author.first_name }}</strong></p>
             </div>
         {% endif %}
     {% endif %}
     <div class="post-header">
+        {% comment %} {% if post.author.avatar %}
+            <img src="{{ post.author.avatar.url }}" alt="Profile Picture" class="profile-pic">
+        {% else %}
+            <img src="{% static 'blog/assets/default-avatar.jpg' %}" alt="Profile Picture" class="profile-pic">
+        {% endif %} {% endcomment %}
         {% if post.is_repost %}
             <div class="post-author">{{ post.original_post.author.first_name }}</div>
         {% else %}
