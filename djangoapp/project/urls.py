@@ -23,6 +23,8 @@ urlpatterns = [
     path('', include('blog.urls')),
     path('summernote/', include('django_summernote.urls')),
     path('admin/', admin.site.urls),
+    path('auth/', include('user.urls')),
+
 ]
 
 handler404 = 'blog.views.handler404'

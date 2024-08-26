@@ -9,8 +9,10 @@ services:
       - 8000:8000
     volumes:
       - ./djangoapp:/djangoapp
-      - ./data/web/static:/data/web/static/
-      - ./data/web/media:/data/web/media/
+      - ./data/web/static:/data/web/static/admin
+      - ./data/web/media:/data/web/media/admin
+      - ./data/web/static/admin/img:/data/web/static/admin/img
+
     env_file:
       - ./dotenv_files/.env
     depends_on:
@@ -21,6 +23,7 @@ services:
     image: postgres:13-alpine
     volumes:
       - ./data/postgres/data:/var/lib/postgresql/data/
+      
     env_file:
       - ./dotenv_files/.env
     ports:
