@@ -6,7 +6,7 @@ from django.views.generic import ListView,DetailView
 from django.views.generic.edit import FormView,CreateView
 from django.views import View
 
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -14,13 +14,90 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 
-
+from django.db import connection
 
 def handler404(request, template_name="blog/pages/404.html"):
     response = render(template_name)
     response.status_code = 404
     return response
 
+
+def post_insights_view():
+
+    insights_dict = {}
+
+    with connection.cursor() as cursor:
+        # user que tem o post mais curtido
+        cursor.execute(
+            """
+            SELECT u.first_name, CAST(SUM(like_count) as INT) as total_likes
+            FROM (
+                SELECT p.author_id, COUNT(l.id) as like_count
+                FROM blog_post p
+                LEFT JOIN blog_like l ON p.id = l.post_id
+                GROUP BY p.author_id
+            ) as like_summary
+            JOIN blog_user u ON like_summary.author_id = u.id
+            GROUP BY u.first_name
+            ORDER BY total_likes DESC
+            LIMIT 1;
+            """)
+        
+        most_liked_post = cursor.fetchone()
+        
+        insights_dict['most_liked_post'] = {
+            'author': most_liked_post[0],
+            'like_count': most_liked_post[1]
+        }
+
+        # usuário com mais reposts
+        cursor.execute(
+            """
+            SELECT u.first_name, CAST(SUM(repost_count) as INT) as total_reposts
+            FROM (
+                SELECT p.author_id, COUNT(r.id) as repost_count
+                FROM blog_post p
+                LEFT JOIN blog_post r ON p.id = r.original_post_id
+                GROUP BY p.author_id
+            ) as repost_summary
+            JOIN blog_user u ON repost_summary.author_id = u.id
+            GROUP BY u.first_name
+            ORDER BY total_reposts DESC
+            LIMIT 1;
+            """)
+        
+        most_reposted_post = cursor.fetchone()
+        insights_dict['most_reposted_post'] = {
+            'author': most_reposted_post[0],
+            'repost_count': most_reposted_post[1]
+        }
+
+        # usuário com mais comentários
+        cursor.execute(
+            """
+            SELECT u.first_name, CAST(SUM(comment_count) as INT) as total_comments
+            FROM (
+                SELECT p.author_id, COUNT(c.id) as comment_count
+                FROM blog_post p
+                LEFT JOIN blog_comment c ON p.id = c.post_id
+                GROUP BY p.author_id
+            ) as comment_summary
+            JOIN blog_user u ON comment_summary.author_id = u.id
+            GROUP BY u.first_name
+            ORDER BY total_comments DESC
+            LIMIT 1;
+            """)
+        
+        most_commented_post = cursor.fetchone()
+
+        insights_dict['most_commented_post'] = {
+            'author': most_commented_post[0],
+            'comment_count': most_commented_post[1]
+        }
+
+        print(insights_dict)
+
+        return insights_dict
 
 @login_required
 def create_post(request):
@@ -197,8 +274,12 @@ class PostsListView(ListView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
+
+        insights_dict = post_insights_view()
+
         context.update({
             'page_title': "Home / ",
+            'insights_dict': insights_dict,
         })
         return context
 
@@ -266,3 +347,4 @@ class SearchListView(ListView):
         context['search_value'] = search_value
         context['page_title'] = f"{search_value} — Search / "
         return context
+    

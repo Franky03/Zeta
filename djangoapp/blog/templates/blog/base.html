@@ -5,9 +5,9 @@
     {% block additional_head %}{% endblock additional_head %}
 </head>
 {% load static %}
+
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' id="my-body-base">
     <div id="particles-js"></div>
-
     <!-- Seu conteúdo -->
     <div id="content-container">
         {% include "blog/partials/_header.html" %}

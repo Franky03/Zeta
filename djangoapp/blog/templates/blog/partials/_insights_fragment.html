@@ -1,12 +1,9 @@
-<div class="most-liked-posts-container">
-    <h2>Post Insights</h2>
-
-    <!-- Autor com mais likes -->
+<div id="inside_cont_in">
     <div class="liked-post">
         <h3>Author with Most Likes</h3>
-        {% if most_liked_author %}
-            <p>{{ most_liked_author.first_name }}</p>
-            <p>{{ most_liked_author.total_likes }} likes</p>
+        {% if insights_dict.most_liked_post %}
+            <p>{{ insights_dict.most_liked_post.author  }}</p>
+            <p>{{ insights_dict.most_liked_post.like_count }} likes</p>
         {% else %}
             <p>No insights available.</p>
         {% endif %}
@@ -15,9 +12,9 @@
     <!-- Autor com mais publicações repostadas -->
     <div class="liked-post">
         <h3>Author with Most Reposted Publications</h3>
-        {% if most_reposted_author %}
-            <p>{{ most_reposted_author.first_name }}</p>
-            <p>{{ most_reposted_author.total_reposts }} reposts</p>
+        {% if insights_dict.most_reposted_post %}
+            <p>{{ insights_dict.most_reposted_post.author }}</p>
+            <p>{{ insights_dict.most_reposted_post.repost_count }} reposts</p>
         {% else %}
             <p>No insights available.</p>
         {% endif %}
@@ -26,9 +23,9 @@
     <!-- Autor com mais comentários -->
     <div class="liked-post">
         <h3>Author with Most Comments</h3>
-        {% if most_commented_author %}
-            <p>{{ most_commented_author.first_name }}</p>
-            <p>{{ most_commented_author.total_comments }} comments</p>
+        {% if insights_dict.most_commented_post %}
+            <p>{{ insights_dict.most_commented_post.author }}</p>
+            <p>{{ insights_dict.most_commented_post.comment_count }} comments</p>
         {% else %}
             <p>No insights available.</p>
         {% endif %}
