@@ -1,0 +1,21 @@
+{% extends "blog/base.html" %}
+
+{% load static %}
+
+<div class="user-profile-page">
+    <div class="profile-pic-container-page">
+        {% if user_data.avatar %}
+            <div>
+                <img src="{{ user_data.avatar.url }}" alt="Foto do perfil" class="profile-pic-page">
+            </div>
+        {% else %}
+            <div>
+                <img src="{% static 'blog/assets/default-avatar.png' %}" alt="Foto do perfil" class="profile-pic-page">
+            </div>
+        {% endif %}
+    </div>
+    <div class="user-bio">
+        <p>{{ user_data.bio }}</p>
+    </div>
+    
+</div>

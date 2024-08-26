@@ -1,13 +1,17 @@
-from blog.views import repost_page,repost,repost_directly,update_post_pre,update_post_pos, delete_post,update_comment_pos,update_comment_pre,delete_comment
-from blog.views import ToggleLikeView,CreateCommentView, CreatePostView
+from blog.views import repost_page,repost,repost_directly,update_post_pre,update_post_pos, delete_post,update_comment_pos,update_comment_pre,delete_comment, register,custom_login, logout_view
+from blog.views import ToggleLikeView,CreateCommentView, CreatePostView,profile
 from blog.views import SearchListView,PostsListView,  PostUniqueView
 from django.urls import path
+from django.contrib.auth.decorators import login_required
 
 
 app_name = 'blog'
 
 urlpatterns = [
-    path('', PostsListView.as_view(), name='index'),
+    path('', login_required(PostsListView.as_view(), login_url="blog:login"), name='index'),
+    path('login/', custom_login, name='login'),
+    path('register/', register, name='register'),
+    path('logout/', login_required(logout_view, login_url="blog:login"), name='logout'),
     path('post/<int:id>/', PostUniqueView.as_view(), name='post'),
     path('search', SearchListView.as_view(), name='search'),
     path('create-post/', CreatePostView.as_view(), name='create_post'),
@@ -25,6 +29,7 @@ htmx_urlpatterns = [
     path('update_comment_pos/', update_comment_pos, name='update_comment_pos'),
     path('update_comment_pre/<int:cpk>', update_comment_pre, name='update_comment_pre'),
     path('delete_comment/', delete_comment, name='delete_comment'),
+    path('profile/', profile, name='profile'),
 ]
 
 urlpatterns += htmx_urlpatterns

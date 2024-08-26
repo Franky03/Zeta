@@ -1,3 +1,4 @@
+{% load static %}
 
 {% if request.path == '/' %}
     <div class="create-post" >
@@ -8,7 +9,11 @@
             >
             {% csrf_token %}
             <div class="input-area" style="display: flex; align-items: center; margin-bottom: 10px;">
-                <img src="{{user.avatar.url}}" alt="Profile Picture" class="profile-pic">
+                {% if user.avatar %}
+                    <img src="{{user.avatar.url}}" alt="Profile Picture" class="profile-pic">
+                {% else %}
+                    <img src="{% static 'blog/assets/default-avatar.png' %}" alt="Profile Picture" class="profile-pic">
+                {% endif %}
                 <textarea class="txt-post" name="content" placeholder="Type your message here..."></textarea>
             </div>
             

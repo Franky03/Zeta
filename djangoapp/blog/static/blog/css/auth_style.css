@@ -1,0 +1,272 @@
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 15%;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    position: relative;
+}
+
+/* Avatar */
+.avatar-container {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px;
+}
+
+/* Estilos do formulário */
+.login-form {
+    margin-top: 40px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.input-icon {
+    font-family: FontAwesome;
+    margin-right: 10px;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    background: none;
+    border: none;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.login-form input[type="text"]::placeholder,
+.login-form input[type="password"]::placeholder {
+    color: #ccc;
+}
+
+/* Botão de login */
+.login-button {
+    background-color: hsl(0, 0%, 20%);
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.login-button:hover {
+    background-color: hsl(0, 0%, 30%);
+}
+
+/* Opções adicionais */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.form-options p {
+    margin: 0;
+    color: #ccc;
+}
+
+.form-options .form-link {
+    color: hsl(var(--clr-white)); 
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.form-options .form-link:hover {
+    color: var(--clr_purple);
+}
+
+/* Contêiner do formulário de registro */
+.register-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 10%;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    position: relative;
+}
+
+/* Avatar padrão */
+.avatar-container-register {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.avatar-default {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px;
+}
+
+/* Estilos do formulário de registro */
+.register-form {
+    margin-top: 60px; /* Ajuste para evitar sobreposição com o avatar */
+}
+
+.input-group-register {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    color: #fff;
+    position: relative;
+}
+
+.input-icon-register {
+    font-family: FontAwesome;
+    margin-right: 10px;
+    color: #888;
+}
+
+.register-form input[type="text"],
+.register-form input[type="password"],
+.register-form input[type="email"],
+.register-form input[type="file"] {
+    background: none;
+    border: none;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.register-form input[type="text"]::placeholder,
+.register-form input[type="password"]::placeholder,
+.register-form input[type="email"]::placeholder {
+    color: #ccc;
+}
+
+/* Botão de registro */
+.register-button {
+    background-color: hsl(0, 0%, 20%);
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.register-button:hover {
+    background-color: hsl(0, 0%, 30%);
+}
+
+/* Opções adicionais (caso necessário) */
+.form-options-register {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.form-options-register p {
+    margin: 0;
+    color: #ccc;
+}
+
+.form-options-register .form-link {
+    color: hsl(var(--clr-white)); 
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.form-options-register .form-link:hover {
+    color: var(--clr_purple);
+}
+
+.input-group-register input::placeholder {
+    color: #ccc;
+    opacity: 1; /* Para garantir que o placeholder não fique muito transparente */
+}
+
+.avatar-upload-container {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    
+}
+
+.avatar-upload-container input[type="file"] {
+    display: none; /* Oculta o campo de upload padrão */
+}
+
+.upload-button {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.upload-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.upload-text {
+    display: inline-block;
+
+}
+
+/* Estilos para o ícone */
+.input-icon-register {
+    font-family: FontAwesome;
+    margin-right: 10px;
+    color: #888;
+}
+
+/* Estilos para o input de arquivo */
+.avatar-upload-container input[type="file"] {
+    cursor: pointer;
+}

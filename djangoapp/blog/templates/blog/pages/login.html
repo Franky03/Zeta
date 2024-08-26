@@ -1,0 +1,27 @@
+{% extends "blog/login_base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="login-container">
+    <div class="avatar-container">
+        <img src="{% static 'blog/assets/default-avatar.jpg' %}" alt="User Avatar" class="avatar">
+    </div>
+    <form method="post" class="login-form">
+        {% csrf_token %}
+        <div class="input-group">
+            <span class="input-icon">&#xf007;</span>
+            {{ form.username }}
+        </div>
+        <div class="input-group">
+            <span class="input-icon">&#xf023;</span>
+            {{ form.password }}
+        </div>
+        <div class="form-options">
+            {% comment %} dont have an account ? register (blog:register) {% endcomment %}
+            <p>Don't have an account?</p>
+            <a href="{% url 'blog:register' %}" class="form-link">Register</a>
+        </div>
+        <button type="submit" class="login-button">LOGIN</button>
+    </form>
+</div>
+{% endblock content %}

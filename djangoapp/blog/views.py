@@ -1,18 +1,21 @@
 from typing import Any
 from blog.models import Post, Comment, Like, User
-from blog.forms import CommentForm, PostForm
+from blog.forms import CommentForm, PostForm, UserRegistrationForm, CustomLoginForm
 from django.db.models import Q
 from django.views.generic import ListView,DetailView
 from django.views.generic.edit import FormView,CreateView
 from django.views import View
 
-from django.http import Http404, HttpResponse, JsonResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
+
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate, login as auth_login, logout
 
 from django.db import connection
 
@@ -347,4 +350,40 @@ class SearchListView(ListView):
         context['search_value'] = search_value
         context['page_title'] = f"{search_value} — Search / "
         return context
-    
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST, request.FILES)  # Adicione request.FILES
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            return redirect('blog:index')  # Redireciona para a página inicial ou qualquer página desejada
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'blog/pages/register.html', {'form': form})
+
+def custom_login(request):
+    if request.method == 'POST':
+        form = CustomLoginForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                auth_login(request, user)
+                return HttpResponseRedirect('/')
+    else:
+        form = CustomLoginForm()
+
+    return render(request, 'blog/pages/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('blog:login')
+
+def profile(request):
+    upk = request.GET.get('uid', '')
+    user = User.objects.filter(id=upk).first()
+    if not user:
+        raise Http404()
+    return render(request, 'blog/pages/user_profile.html', {'user_data': user, 'page_title': f"{user.first_name} / "})

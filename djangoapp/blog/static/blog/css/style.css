@@ -63,6 +63,7 @@ header {
     display: flex;
     justify-content: center;
     position: relative;
+    left: 52px;
 }
 
 .search-bar input {
@@ -81,7 +82,7 @@ header {
 .search-bar i {
     position: absolute;
     top: 48%;
-    left: 37rem; /* Ajuste a posição para colocar o ícone dentro do input */
+    left: 32rem; /* Ajuste a posição para colocar o ícone dentro do input */
     transform: translateY(-50%);
     font-size: 18px;
     color: hsl(0, 0%, 50%);
@@ -106,6 +107,14 @@ header {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px; /* Espaçamento entre a imagem e o campo de texto */
+}
+
+.profile-pic-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
 }
 
 .profile-pic {
@@ -592,4 +601,53 @@ header {
 
 .btn-insights:hover {
     background-color: #0056b3; /* Azul mais escuro para hover */
+}
+
+
+.user-profile-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza a foto no topo */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    z-index: 1;
+    margin-top: 80px; /* Ajusta o espaço entre o header e o perfil */
+}
+
+.profile-pic-container-page {
+    margin-bottom: 20px; /* Espaço entre a foto e a bio */
+}
+
+.profile-pic-page {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid blue;
+}
+
+.user-bio {
+    width: 100%;
+    background-color: hsl(var(--clr-black));
+    padding: 15px;
+    color: white; /* Cor do texto para contrastar com o fundo escuro */
+    text-align: center; /* Centraliza o texto da bio */
+    border-radius: 10px; /* Bordas arredondadas para a bio */
+}
+
+.logout-name form button {
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 1.6rem;
+    border-radius: 5px;
+}
+
+.logout-name form button:hover {
+    background-color: hsl(0, 100%, 95%);
+    color: hsl(0, 100%, 50%);
 }

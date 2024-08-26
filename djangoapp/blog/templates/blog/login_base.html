@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    {% include "blog/partials/_head.html" %}
+    {% block additional_head %}{% endblock additional_head %}
+</head>
+{% load static %}
+
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' id="my-body-base">
+    <div id="particles-js"></div>
+    <!-- Seu conteúdo -->
+    <div id="content-container">
+        {% include "blog/partials/messages.html" %}
+        {% block content %}
+        {% endblock content %}
+        {% include "blog/partials/_footer.html" %}
+    </div>
+    
+    <script src="{% static 'blog/js/particles.js' %}"></script>
+    <script> 
+        particlesJS.load('particles-js', "{% static 'blog/js/particlesjs-config.json' %}", function() {
+            console.log('callback - particles.js config loaded');
+            });
+    </script>
+</body>
+</html>

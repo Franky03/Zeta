@@ -19,9 +19,25 @@
             <input type="text" placeholder="Search..." name="search">
             <button type="submit" style="display:none;"></button>
         </form>
+        
         <div class="user-profile">
             <div class="profile-pic-container">
-                <img src="{{user.avatar.url}}" alt="Foto do perfil" class="profile-pic">
+                {% if user.avatar %}
+                    <div class="profile-pic-button">
+                        <img src="{{ user.avatar.url }}" alt="Foto do perfil" class="profile-pic">
+                    </div>
+                {% else %}
+                    <div class="profile-pic-button">
+                        <img src="{% static 'blog/assets/default-avatar.png' %}" alt="Foto do perfil" class="profile-pic">
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="logout-name"> 
+                <form action="{% url 'blog:logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
             </div>
         </div>
     </div>

@@ -1,0 +1,45 @@
+{% extends "blog/login_base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="register-container">
+    <div class="avatar-container-register">
+        <img src="{% static 'blog/assets/default-avatar.jpg' %}" alt="Default Avatar" class="avatar-default">
+    </div>
+    <form method="post" class="register-form" enctype="multipart/form-data">  <!-- Adicione enctype -->
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="input-group-register">
+            <span class="input-icon-register">&#xf007;</span> <!-- Ícone de usuário -->
+            {{ form.username }}
+        </div>
+        <div class="input-group-register">
+            <span class="input-icon-register">&#xf0e0;</span> <!-- Ícone de e-mail -->
+            {{ form.email }}
+        </div>
+        <div class="input-group-register">
+            <span class="input-icon-register">&#xf007;</span> <!-- Ícone de primeiro nome -->
+            {{ form.first_name }}
+        </div>
+        <div class="input-group-register">
+            <span class="input-icon-register">&#xf007;</span> <!-- Ícone de último nome -->
+            {{ form.last_name }}
+        </div>
+        <div class="input-group-register">
+            <span class="input-icon-register">&#xf023;</span> <!-- Ícone de senha -->
+            {{ form.password }}
+        </div>
+        <div >
+            
+            <div class="avatar-upload-container">
+                {{ form.avatar }}
+                <label for="{{ form.avatar.id_for_label }}" class="upload-button">
+                    <span class="input-icon-register">&#xf083;</span> <!-- Ícone de avatar -->
+                    <span class="upload-text">Choose Avatar</span>
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="register-button">Register</button>
+    </form>
+</div>
+{% endblock content %}
