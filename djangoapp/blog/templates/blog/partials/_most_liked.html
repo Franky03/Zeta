@@ -1,0 +1,36 @@
+<div class="most-liked-posts-container">
+    <h2>Post Insights</h2>
+
+    <!-- Autor com mais likes -->
+    <div class="liked-post">
+        <h3>Author with Most Likes</h3>
+        {% if most_liked_author %}
+            <p>{{ most_liked_author.first_name }}</p>
+            <p>{{ most_liked_author.total_likes }} likes</p>
+        {% else %}
+            <p>No insights available.</p>
+        {% endif %}
+    </div>
+
+    <!-- Autor com mais publicações repostadas -->
+    <div class="liked-post">
+        <h3>Author with Most Reposted Publications</h3>
+        {% if most_reposted_author %}
+            <p>{{ most_reposted_author.first_name }}</p>
+            <p>{{ most_reposted_author.total_reposts }} reposts</p>
+        {% else %}
+            <p>No insights available.</p>
+        {% endif %}
+    </div>
+
+    <!-- Autor com mais comentários -->
+    <div class="liked-post">
+        <h3>Author with Most Comments</h3>
+        {% if most_commented_author %}
+            <p>{{ most_commented_author.first_name }}</p>
+            <p>{{ most_commented_author.total_comments }} comments</p>
+        {% else %}
+            <p>No insights available.</p>
+        {% endif %}
+    </div>
+</div>
