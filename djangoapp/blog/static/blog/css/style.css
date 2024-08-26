@@ -23,7 +23,7 @@ body {
 }
 
 header {
-    background-color: transparent;
+    background-color: hsl(var(--clr-black) / 0.9);
     color: hsl(var(--clr-white));
     padding: 10px 20px;
     display: flex;
@@ -223,6 +223,13 @@ img.profile-pic {
     background-color: hsl(var(--clr-black));
 }
 
+.user-icon-name {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    
+}
+
 .post-link {
     text-decoration: none; /* Remove o sublinhado padrão dos links */
     color: inherit; /* Garante que o texto dentro do link herde a cor do pai */
@@ -237,10 +244,12 @@ img.profile-pic {
 }
 
 .post-author {
+    margin-left: 10px;
     font-weight: bold;
 }
 
 .post-date {
+    margin-top: 10px;
     color: hsl(0, 0%, 50%);
 }
 
@@ -339,6 +348,7 @@ img.profile-pic {
 .dropdown {
     position: relative;
     display: inline-block;
+    margin-top: 10px;
 }
 
 .dropdown-toggle {

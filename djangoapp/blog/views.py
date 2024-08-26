@@ -341,7 +341,7 @@ class SearchListView(ListView):
     def get_queryset(self):
         search_value = self.request.GET.get('search', '').strip()
         return Post.objects.get_posts().filter(
-            Q(content__icontains=search_value)
+            Q(content__icontains=search_value) | Q(author__first_name__icontains=search_value)
         )
     
     def get_context_data(self, **kwargs):

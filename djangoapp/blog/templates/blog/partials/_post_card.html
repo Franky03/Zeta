@@ -11,16 +11,18 @@
         {% endif %}
     {% endif %}
     <div class="post-header">
-        {% comment %} {% if post.author.avatar %}
-            <img src="{{ post.author.avatar.url }}" alt="Profile Picture" class="profile-pic">
-        {% else %}
-            <img src="{% static 'blog/assets/default-avatar.jpg' %}" alt="Profile Picture" class="profile-pic">
-        {% endif %} {% endcomment %}
-        {% if post.is_repost %}
-            <div class="post-author">{{ post.original_post.author.first_name }}</div>
-        {% else %}
-            <div class="post-author">{{ post.author.first_name }}</div>
-        {% endif %}
+        <div class="user-icon-name"> 
+            {% if post.author.avatar %}
+                <img src="{{ post.author.avatar.url }}" alt="Profile Picture" class="profile-pic">
+            {% else %}
+                <img src="{% static 'blog/assets/default-avatar.jpg' %}" alt="Profile Picture" class="profile-pic">
+            {% endif %}
+            {% if post.is_repost %}
+                <div class="post-author">{{ post.original_post.author.first_name }}</div>
+            {% else %}
+                <div class="post-author">{{ post.author.first_name }}</div>
+            {% endif %}
+        </div>
         {% if post.is_repost %}
             <div class="post-date">{{ post.original_post.created_at|date:"d M Y, H:i" }}</div>
         {% else %}
