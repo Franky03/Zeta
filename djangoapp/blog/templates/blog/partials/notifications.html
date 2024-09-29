@@ -1,0 +1,13 @@
+<h1>Notificações</h1>
+<ul id="notification-list">
+    {% for notification in notifications %}
+        <li>
+            {{ notification.created_at }}: 
+            Você recebeu um novo comentário no seu post "{{ notification.post.title }}"
+        </li>
+    {% empty %}
+        <li>Você não tem novas notificações.</li>
+    {% endfor %}
+</ul>
+
+

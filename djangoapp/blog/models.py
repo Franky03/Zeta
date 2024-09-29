@@ -221,3 +221,11 @@ class Comment(models.Model):
     def __str__(self):
         return f'{self.author.username}: {self.content[:30]}'
 
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Usuário que receberá a notificação
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)  # Post relacionado
+    message = models.TextField()  # Mensagem da notificação
+    created_at = models.DateTimeField(auto_now_add=True)  # Data e hora da notificação
+
+    def __str__(self):
+        return f'Notification for {self.user.username} on post {self.post.id}'

@@ -1,12 +1,12 @@
 from typing import Any
-from blog.models import Post, Comment, Like, User
+from blog.models import Post, Comment, Like, User, Notification
 from blog.forms import CommentForm, PostForm, UserRegistrationForm, CustomLoginForm
 from django.db.models import Q
 from django.views.generic import ListView,DetailView
 from django.views.generic.edit import FormView,CreateView
 from django.views import View
 
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -136,9 +136,12 @@ def update_post_pos(request):
         if new_content == post.content:
             return render(request, 'blog/partials/_post_card.html', {'post': post})
 
-        # Se o conteúdo é válido e mudou, salva as alterações
-        post.content = new_content
-        post.save()
+        # Chama a stored procedure para atualizar o conteúdo do post usando execute
+        with connection.cursor() as cursor:
+            cursor.execute("CALL update_post_content(%s, %s)", [pid, new_content])
+
+        # Recarrega o post atualizado
+        post.refresh_from_db()
 
         return render(request, 'blog/partials/_post_card.html', {'post': post})
     
@@ -387,3 +390,17 @@ def profile(request):
     if not user:
         raise Http404()
     return render(request, 'blog/pages/user_profile.html', {'user_data': user, 'page_title': f"{user.first_name} / "})
+
+def notifications_view(request):
+    notifications = Notification.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'notifications.html', {'notifications': notifications})
+
+def fetch_notifications(request):
+    notifications = Notification.objects.filter(user=request.user).order_by('-created_at')
+    notifications_data = [
+        {
+            'created_at': notification.created_at,
+            'message': f'Você recebeu um novo comentário no seu post "{notification.post.title}"'
+        } for notification in notifications
+    ]
+    return JsonResponse(notifications_data, safe=False)
